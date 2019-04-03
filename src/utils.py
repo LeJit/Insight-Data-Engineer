@@ -43,6 +43,7 @@ def write_results(filename:str, results:List[Department], columns:List[str]):
         writer = csv.DictWriter(results_file, fieldnames=columns)
         writer.writeheader()
         for result in results:
-            writer.writerow(result._asdictionary())
+            if result.number_of_orders > 0:
+                writer.writerow(result._asdictionary())
         
 
