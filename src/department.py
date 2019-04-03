@@ -1,15 +1,11 @@
 from collections import defaultdict
-from order import Order
+from src.order import Order
 
 class Department(object):
 
     def __init__(self, department_id, orders):
         self.department_id = department_id
         self.orders = orders
-
-    def _validate_departmentid(self, department_id):
-        pass
-
 
     @property
     def number_of_orders(self):

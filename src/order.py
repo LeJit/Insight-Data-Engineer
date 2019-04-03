@@ -3,9 +3,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 class Order(object):
-   """
-
-   """
+   
    def __init__(self, order_id, reordered):
         self.order_id = order_id
         self.reordered = self._validate_reorder(reordered)

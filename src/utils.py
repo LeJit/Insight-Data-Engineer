@@ -1,6 +1,6 @@
 import csv
 from typing import List
-from department import Department
+from src.department import Department
 import os
 
 INPUT_DIR = "{0}/input".format(os.getcwd())
@@ -14,7 +14,7 @@ def read_file_streaming(filename:str):
     remaining row in the CSV file.
 
         Params:
-            filename:
+            filename: Name of input CSV file.
         Return:
             Generator: generator object 
     """
@@ -33,10 +33,9 @@ def write_results(filename:str, results:List[Department], columns:List[str]):
     for each row.
 
         Params:
-            results:
-
-            columns:
-
+            filename: Name of the output CSV File.
+            results: List of Departments found in the orders.
+            columns: Column headers for the output CSV file.
         Return:
             None, but outputs a CSV to the output/ directory.
     """

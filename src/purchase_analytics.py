@@ -1,6 +1,6 @@
-from utils import read_file_streaming, write_results
-from order import Order
-from department import Department
+from src.utils import read_file_streaming, write_results
+from src.order import Order
+from src.department import Department
 import os
 import logging
 
@@ -19,9 +19,7 @@ args = vars(parser.parse_args())
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-##
-## Order <--> Product ID <--> DeparmentID
-##
+
 
 def map_orders_to_products(orders) -> DefaultDict[str, List]:
     """
@@ -47,10 +45,10 @@ def map_department_to_orders(products, prod_order_map) -> DefaultDict[str, List]
         department information to the Instacart orders.
 
         Params:
-            Products:
-
-            Prod_Order_Map:
-
+            Products: A Generator pointing to the Products CSV file where
+                each row contains product information.
+            Prod_Order_Map: Dictionary mapping a product ID to an Order.
+            
         Returns:
             Dictionary object mapping Department ID (str) to a List of Orders that
                 correspond to purchases in that department.
@@ -63,14 +61,17 @@ def map_department_to_orders(products, prod_order_map) -> DefaultDict[str, List]
             )
     return dept_product_map
 
-def create_departments(dept_product_map) -> List[Department]:
+def create_departments(dept_product_map:DefaultDict[str, List]) -> List[Department]:
     """
-    create_departments:
-
+    create_departments: Function to create a list of Departments for computing
+        the resultant metrics.
 
         Params:
-            Dept_Product_Map
+            Dept_Product_Map: Dictionary mapping Department IDs to a list of
+                Orders pertaining to purchases of products located 
+                in that department.
         Returns:
+            A List of Department objects that compute the necessary metrics.
     """
     list_of_departments = [
         Department(
@@ -80,8 +81,6 @@ def create_departments(dept_product_map) -> List[Department]:
         for (dept_id, orders) in dept_product_map.items()
     ]
     return list_of_departments
-
-
 
 def main():
     logger.info("Ingesting CSVs files")
