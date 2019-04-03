@@ -1,6 +1,10 @@
 import csv
 from typing import List
 from department import Department
+import os
+
+INPUT_DIR = "{0}/input".format(os.getcwd())
+OUTPUT_DIR = "{0}/output".format(os.getcwd())
 
 
 def read_file_streaming(filename:str):
@@ -14,7 +18,7 @@ def read_file_streaming(filename:str):
         Return:
             Generator: generator object 
     """
-    with open(filename, "r") as text_file:
+    with open("{0}/{1}".format(INPUT_DIR, filename), "r") as text_file:
         csv_file = csv.reader(text_file, delimiter=",", quotechar='"')
         next(csv_file)
         for line in csv_file:
@@ -22,7 +26,7 @@ def read_file_streaming(filename:str):
     text_file.close()
 
 
-def write_results(results:List[Department], columns:List[str]):
+def write_results(filename:str, results:List[Department], columns:List[str]):
     """
     Write_Results: Writes results to an output CSV file. This function
     takes in a list of Department objects and outputs the relevant metrics
@@ -36,7 +40,7 @@ def write_results(results:List[Department], columns:List[str]):
         Return:
             None, but outputs a CSV to the output/ directory.
     """
-    with open("output/results.csv", "w") as results_file:
+    with open("{0}/{1}".format(OUTPUT_DIR, filename), "w") as results_file:
         writer = csv.DictWriter(results_file, fieldnames=columns)
         writer.writeheader()
         for result in results:

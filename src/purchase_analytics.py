@@ -8,13 +8,20 @@ from typing import List, DefaultDict
 from collections import defaultdict
 import argparse
 
+parser = argparse.ArgumentParser()
+parser.add_argument("-p", "--product", required=True,
+                help="Name of Products file")
+parser.add_argument("-o", "--orders", required=True,
+                help="Name of Orders file")
+parser.add_argument("-r", "--results", required=True,
+                help="Name of output result file")
+args = vars(parser.parse_args())
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 ##
 ## Order <--> Product ID <--> DeparmentID
 ##
-
 
 def map_orders_to_products(orders) -> DefaultDict[str, List]:
     """
@@ -78,8 +85,8 @@ def create_departments(dept_product_map) -> List[Department]:
 
 def main():
     logger.info("Ingesting CSVs files")
-    products = read_file_streaming("{0}/input/products_small.csv".format(os.getcwd()))
-    orders = read_file_streaming("{0}/input/order_products.csv".format(os.getcwd()))
+    products = read_file_streaming(args["product"])
+    orders = read_file_streaming(args["orders"])
    
     prod_order_map = map_orders_to_products(orders)
     dept_product_map = map_department_to_orders(products, prod_order_map)
@@ -93,8 +100,9 @@ def main():
                 "percentage"
             ]
     list_of_departments = sorted(list_of_departments)
-    write_results(list_of_departments, headers)
+    write_results(args["results"], list_of_departments, headers)
     logger.info("Process has completed")
     
 if __name__ == "__main__":
     main()
+    
