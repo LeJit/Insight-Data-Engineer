@@ -1,1 +1,1 @@
-python3 src/purchase_analytics.py -p "products_small.csv" -o "order_products.csv" -r "results.csv"
+python3 src/purchase_analytics.py -p "products.csv" -o "order_products.csv" -r "report.csv"
